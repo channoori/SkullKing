@@ -13,6 +13,14 @@ class ViewController: UIViewController {
     @IBOutlet weak var plusBtn: UIButton!
     @IBOutlet weak var playerCountLabel: UILabel!
     
+    @IBOutlet weak var player1Name: UITextField!
+    @IBOutlet weak var player2Name: UITextField!
+    @IBOutlet weak var player3Name: UITextField!
+    @IBOutlet weak var player4Name: UITextField!
+    @IBOutlet weak var player5Name: UITextField!
+    @IBOutlet weak var player6Name: UITextField!
+    
+    
     var player: Int = 0 {
         didSet {
             playerCountLabel.text = "\(player)"
@@ -22,22 +30,40 @@ class ViewController: UIViewController {
     var minimumPlayer: Int = 2
     var maximumPlayer: Int = 6
     
+    var playerGroup: [UITextField] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         uiInitialize()
-        
+        playerGroup.append(contentsOf: [player1Name, player2Name, player3Name, player4Name, player5Name, player6Name])
+        for value in playerGroup {
+            value.isHidden = true
+        }
     }
     
     @IBAction func onMinus(_ sender: Any) {
+        
         if player > 0 {
             player -= 1
+            for (index, value) in playerGroup.enumerated() {
+                if index >= player {
+                    value.isHidden = true
+                }
+            }
         }
     }
     
     @IBAction func onPlus(_ sender: Any) {
         if player < maximumPlayer {
             player += 1
+            for (index, value) in playerGroup.enumerated() {
+                if index < player {
+                    value.isHidden = false
+                } else {
+                    value.isHidden = true
+                }
+            }
         }
     }
     
